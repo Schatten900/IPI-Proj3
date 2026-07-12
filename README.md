@@ -6,12 +6,12 @@ Este repositório contém o trabalho final da matéria de Processamento de Image
 
 ## 📌 Descrição dos Trabalhos
 
-### 🧠 Trabalho 1: Identificação de Elemento Conexo (Cérebro/Tumor)
+### 🧠 Trabalho final: Aplicação da Segmentação Canny adaptado para imagens ruidosas
 * **Objetivo:** Melhorar o algoritimo tradicional Canny por meio de aplicações morfologicas em imagens ruidosas.
 * **Fluxo de Processamento:**
   1. Remoção de ruído utilizando filtros passa-baixas sequenciais (**Gaussiano** ).
   2. Aplicação do **Gradiente** a fim de detectar as bordas
-  3. Transformações das bordas da imagem por meio do **DoubleThreshold**, **Hysteresis** e **Non Maximum Supression**
+  3. Transformações das bordas da imagem por meio do **Double Threshold**, **Hysteresis** e **Non Maximum Supression**
   4. Aplicação de operações morfológicas de **Abertura** e **Fechamento**.
   5. Análise da imagem obtida
 
