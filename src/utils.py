@@ -28,3 +28,14 @@ def separar_canais(img : np.ndarray) -> list:
 
 def juntar_canais(channels : list) -> np.ndarray:
     return cv2.merge(channels)
+
+def aplicar_salt_pepper(img: np.ndarray, quantidade=0.05):
+
+    resultado = img.copy()
+
+    random = np.random.rand(*img.shape[:2])
+
+    resultado[random < quantidade/2] = 0
+    resultado[random > 1-quantidade/2] = 255
+
+    return resultado
