@@ -1,24 +1,36 @@
-from utils import abrir_imagem, mostrar_imagem
+from .utils import abrir_imagem, mostrar_imagem
 import cv2
 import numpy as np
 
-def aplicar_erosao(img : np.ndarray) -> np.ndarray:
+def aplicar_erosao(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     # Funcao responsavel por aplicar a erosao a imagem
-    pass
+    if kernel is None:
+        kernel = np.ones((3, 3), np.uint8)
+    return cv2.erode(img, kernel, iterations=1)
 
 
-def aplicar_dilatacao(img : np.ndarray) -> np.ndarray:
+
+def aplicar_dilatacao(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     # Funcao responsavel por aplicar a dilatacao a imagem
-    pass
+    if kernel is None:
+        kernel = np.ones((3, 3), np.uint8)
+    return cv2.dilate(img, kernel, iterations=1)
 
-def aplicar_abertura(img : np.ndarray) -> np.ndarray:
+
+def aplicar_abertura(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     # Funcao responsavel por aplicar a abertura na imagem
-    pass
+    if kernel is None:
+        kernel = np.ones((3, 3), np.uint8)
+    return cv2.morphologyEx(img, cv2.MORPH_OPEN, kernel)
 
-def aplicar_fechamento(img : np.ndarray) -> np.ndarray:
+
+def aplicar_fechamento(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     # Funcao responsavel por aplicar o fechamento na imagem
-    pass
+    if kernel is None:
+        kernel = np.ones((3, 3), np.uint8)
+    return cv2.morphologyEx(img, cv2.MORPH_CLOSE, kernel)
 
-def aplicar_morfologicas(img : np.ndarray) -> np.ndarray :
-    # Funcao responsavel por receber a imagem tratada pelo Canny
+
+def aplicar_morfologicas(img: np.ndarray) -> np.ndarray:
+    # Funcao responsavel por aplicar a deteccao de borda morfologica multidirecional.
     pass
