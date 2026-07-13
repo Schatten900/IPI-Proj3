@@ -58,7 +58,6 @@ def aplicar_gradiente_classico(img : np.ndarray):
 
     magnitude = np.sqrt(gx**2 + gy**2)
 
-
     direcao = np.arctan2(gy, gx)
 
     return magnitude,direcao
@@ -107,7 +106,6 @@ def aplicar_gradiente_adaptado(img : np.ndarray):
 
 def non_maximum_suppression(magnitude,direcao):
     # Funcao responsavel por transformar bordas grossas em finas
-
 
     altura, largura = magnitude.shape
 

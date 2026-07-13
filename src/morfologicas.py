@@ -9,7 +9,6 @@ def aplicar_erosao(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     return cv2.erode(img, kernel, iterations=1)
 
 
-
 def aplicar_dilatacao(img: np.ndarray, kernel: np.ndarray = None) -> np.ndarray:
     # Funcao responsavel por aplicar a dilatacao a imagem
     if kernel is None:

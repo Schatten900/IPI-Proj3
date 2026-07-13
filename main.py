@@ -1,14 +1,14 @@
 
-from src.utils import abrir_imagem, mostrar_imagem, aplicar_salt_pepper
+from src.utils import abrir_imagem, mostrar_imagem, aplicar_ruido_imagem
 from src.canny import aplicar_canny_adaptado, aplicar_canny_classico
 #from src.morfologicas import aplicar_morfologicas
 
 def aplicar_algoritmo():
     #img_cinza = abrir_imagem("img/man-in-cam.png",grayscale=True)
-    #img_cinza = abrir_imagem("img/casa-segment.png",grayscale=True)
-    img_cinza = abrir_imagem("img/flowers-seg.png",grayscale=True)
+    img_cinza = abrir_imagem("img/casa-segment.png",grayscale=True)
+    #img_cinza = abrir_imagem("img/flowers-seg.png",grayscale=True)
 
-    imgRuidosa = aplicar_salt_pepper(img_cinza)
+    imgRuidosa = aplicar_ruido_imagem(img_cinza)
     mostrar_imagem(imgRuidosa,"imagem com ruido")
 
     # Comparacao com o classico
