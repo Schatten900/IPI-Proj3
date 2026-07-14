@@ -16,14 +16,84 @@ def aplicar_gaussiana(img : np.ndarray):
     return cv2.GaussianBlur(img, (5,5), 0)
 
 
-def aplicar_mediana(img : np.ndarray):
-    # Funcao responsavel por aplicar a o filtro mediano para limpeza de paper-salt
-    return cv2.medianBlur(img,5)
+def aplicar_mediana_adaptativa(img: np.ndarray, tamanho_inicial=3, tamanho_maximo=9):
 
+    """
+    Filtro de Mediana Adaptativa baseado no algoritmo
+    Adaptive Median Filter.
+
+    Entrada:
+        img -> imagem em escala de cinza
+
+    Saída:
+        imagem filtrada
+    """
+
+    altura, largura = img.shape
+
+    raio = tamanho_maximo // 2
+
+    img_pad = np.pad(img, raio, mode="edge")
+
+    resultado = np.zeros_like(img)
+
+    for i in range(altura):
+
+        for j in range(largura):
+
+            tamanho = tamanho_inicial
+
+            while True:
+
+                raio_atual = tamanho // 2
+
+                centro_i = i + raio
+                centro_j = j + raio
+
+                janela = img_pad[
+                    centro_i-raio_atual:
+                    centro_i+raio_atual+1,
+
+                    centro_j-raio_atual:
+                    centro_j+raio_atual+1
+                ]
+
+                zmin = np.min(janela)
+
+                zmax = np.max(janela)
+
+                zmed = np.median(janela)
+
+                A1 = zmed - zmin
+
+                A2 = zmed - zmax
+
+                if A1 > 0 and A2 < 0:
+
+                    zxy = img_pad[centro_i, centro_j]
+
+                    B1 = zxy - zmin
+
+                    B2 = zxy - zmax
+
+                    if B1 > 0 and B2 < 0:
+                        resultado[i,j] = zxy
+                    else:
+                        resultado[i,j] = zmed
+                    break
+                
+                else:
+                    tamanho += 2
+                    
+                    if tamanho > tamanho_maximo:
+                        resultado[i,j] = zmed
+                        break
+
+    return resultado.astype(np.uint8)
 
 def aplicar_filtro_hibrido(img : np.ndarray):
     # Funcao por aplicar o os filtros adaptados mediana e gaussianos
-    img_mediana = aplicar_mediana(img)
+    img_mediana = aplicar_mediana_adaptativa(img)
     img_filtrada = aplicar_gaussiana(img_mediana)
 
     return img_filtrada
