@@ -24,9 +24,9 @@ def fundir_canny_morfologia(canny, morfologia, alpha=0.5):
     return F5.astype(np.uint8)
 
 def aplicar_algoritmo():
-    #img_cinza = abrir_imagem("img/man-in-cam.png",grayscale=True)
-    img_cinza = abrir_imagem("img/casa-segment.png",grayscale=True)
-    #img_cinza = abrir_imagem("img/flowers-seg.png",grayscale=True)
+    img_cinza = abrir_imagem("img/cameraman.tif",grayscale=True)
+    #img_cinza = abrir_imagem("img/house.tif",grayscale=True)
+    #img_cinza = abrir_imagem("img/jetplane.tif",grayscale=True)
 
     imgRuidosa = aplicar_ruido_imagem(img_cinza)
     mostrar_imagem(imgRuidosa,"imagem com ruido")
