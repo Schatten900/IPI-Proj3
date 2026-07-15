@@ -33,9 +33,15 @@ def aplicar_mediana_adaptativa(img: np.ndarray, tamanho_inicial=3, tamanho_maxim
 
     raio = tamanho_maximo // 2
 
-    img_pad = np.pad(img, raio, mode="edge")
+    # IMPORTANTE:
+    # converte para inteiro com sinal para evitar overflow
+    img_pad = np.pad(
+        img.astype(np.int32),
+        raio,
+        mode="edge"
+    )
 
-    resultado = np.zeros_like(img)
+    resultado = np.zeros_like(img, dtype=np.int32)
 
     for i in range(altura):
 
@@ -58,38 +64,38 @@ def aplicar_mediana_adaptativa(img: np.ndarray, tamanho_inicial=3, tamanho_maxim
                     centro_j+raio_atual+1
                 ]
 
-                zmin = np.min(janela)
+                zmin = int(np.min(janela))
+                zmax = int(np.max(janela))
+                zmed = int(np.median(janela))
 
-                zmax = np.max(janela)
-
-                zmed = np.median(janela)
-
+                # Etapa A do Adaptive Median Filter
                 A1 = zmed - zmin
-
                 A2 = zmed - zmax
 
                 if A1 > 0 and A2 < 0:
 
-                    zxy = img_pad[centro_i, centro_j]
+                    zxy = int(img_pad[centro_i, centro_j])
 
+                    # Etapa B
                     B1 = zxy - zmin
-
                     B2 = zxy - zmax
 
                     if B1 > 0 and B2 < 0:
-                        resultado[i,j] = zxy
+                        resultado[i, j] = zxy
                     else:
-                        resultado[i,j] = zmed
+                        resultado[i, j] = zmed
+
                     break
-                
+
                 else:
+
                     tamanho += 2
-                    
+
                     if tamanho > tamanho_maximo:
-                        resultado[i,j] = zmed
+                        resultado[i, j] = zmed
                         break
 
-    return resultado.astype(np.uint8)
+    return np.clip(resultado, 0, 255).astype(np.uint8)
 
 def aplicar_filtro_hibrido(img : np.ndarray):
     # Funcao por aplicar o os filtros adaptados mediana e gaussianos
